@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>!운찾기!</title>
+</head>
+<body>
+    <h1>!운찾기!</h1>
+    <label for="numTrials">몇 차 결과까지 실행하시겠습니까?</label>
+    <input type="number" id="numTrials" min="1" value="10">
+    <button onclick="runGame()">시작하기</button>
+    <div id="output"></div>
+    <script>
+        function getRandomChoice(choices) {
+            return choices[Math.floor(Math.random() * choices.length)];
+        }
+
+        function runGame() {
+            let doChoices = [1, 2, 3, 4, 5, 6, 7];
+            let outputDiv = document.getElementById("output");
+            let numTrials = parseInt(document.getElementById("numTrials").value);
+            outputDiv.innerHTML = "";
+            let totalPercentage = 0;
+            let percentages = [];
+
+            for (let i = 1; i <= numTrials; i++) {
+                let sum;
+                let count = 0;
+                while (true) {
+                    count++;
+                    let a1 = getRandomChoice(doChoices);
+                    let a2 = getRandomChoice(doChoices);
+                    let a3 = getRandomChoice(doChoices);
+                    sum = a1 + a2 + a3;
+
+                    if (sum == 21) {
+                        let percentage = (1 / count) * 100;
+                        percentages.push(percentage);
+                        totalPercentage += percentage;
+                        outputDiv.innerHTML += `${i}차 결과: Good Lucky (시도 횟수: ${count}, 퍼센트: ${percentage.toFixed(2)}%)<br>`;
+                        break;
+                    }
+                }
+            }
+
+            let averagePercentage = (totalPercentage / numTrials).toFixed(2) + '%';
+            outputDiv.innerHTML += `<br>평균 퍼센트: ${averagePercentage}`;
+        }
+    </script>
+</body>
+</html>
